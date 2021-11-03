@@ -14,7 +14,7 @@
  * @return string The original, desired slug.
  */
 function wp_filter_wp_template_unique_post_slug( $override_slug, $slug, $post_ID, $post_status, $post_type ) {
-	if ( 'wp_template' !== $post_type ) {
+	if ( 'wp_template' !== $post_type && 'wp_template_part' !== $post_type ) {
 		return $override_slug;
 	}
 
@@ -22,13 +22,6 @@ function wp_filter_wp_template_unique_post_slug( $override_slug, $slug, $post_ID
 		$override_slug = $slug;
 	}
 
-	/*
-	 * Template slugs must be unique within the same theme.
-	 * TODO - Figure out how to update this to work for a multi-theme environment.
-	 * Unfortunately using `get_the_terms()` for the 'wp-theme' term does not work
-	 * in the case of new entities since is too early in the process to have been saved
-	 * to the entity. So for now we use the currently activated theme for creation.
-	 */
 	$theme = wp_get_theme()->get_stylesheet();
 	$terms = get_the_terms( $post_ID, 'wp_theme' );
 	if ( $terms && ! is_wp_error( $terms ) ) {

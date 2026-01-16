@@ -1459,6 +1459,7 @@ module.exports = function(grunt) {
 	} );
 
 	grunt.registerTask( 'gutenberg-integrate', 'Complete Gutenberg integration workflow.', [
+		'gutenberg-checkout',
 		'gutenberg-build',
 		'gutenberg-copy'
 	] );
